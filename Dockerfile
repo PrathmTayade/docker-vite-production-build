@@ -45,14 +45,12 @@ COPY . .
 # Run the build script.
 RUN yarn run build
 
-# Start nginx and sever production build from dis
-FROM nginx:1.25.4-alpine3.18
+# nginx serve production build 
+FROM nginx:alpine
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /usr/src/app/dist /var/www/html/
-
-EXPOSE 3000
 
 ENTRYPOINT ["nginx","-g","daemon off;"]
 
